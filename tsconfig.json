@@ -1,0 +1,13 @@
+{
+    //cho TypeScript biết cách biên dịch code .ts thành JavaScript.
+    "compilerOptions": {
+        "target": "ES2021",
+        "module": "ESNext", //là giữ nguyên cú pháp import/export mới nhất
+        "moduleResolution": "Node",
+        "esModuleInterop": false,
+        "strict": false,
+        "strictNullChecks": true,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitReturns": true
+    }
+}
