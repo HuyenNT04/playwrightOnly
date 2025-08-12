@@ -1,5 +1,5 @@
 export interface loginType {
-    username: string;
+    email: string;
     password: string;
 }
 export enum userGroup{

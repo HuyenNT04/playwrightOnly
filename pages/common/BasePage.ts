@@ -73,6 +73,13 @@ export class BasePage {
   async getUrl(): Promise<string> {
     return this.page.url();
   }
+  async isElementVisible(element: Locator): Promise<boolean> {
+    const isVisible = await element.isVisible();
+    if(!isVisible){
+      console.log('Element is not visible!');
+    }
+    return isVisible;
+  }
   async mouseHoverOnElement(element: Locator): Promise<void> {
     await element.hover();
   }
