@@ -5,8 +5,8 @@
   "scripts": {
     "format": "prettier --write",
     "lint-fix": "npx eslint . --ext .ts --fix",
-    "runnow": "ENV=qa playwright test --grep @runnow",
-    "test:ui": "ENV=stag npx playwright test --grep @ui"
+    "runnow": "cross-env ENV=qa npx playwright test --grep @login",
+    "test:ui": "cross-env ENV=qa npx playwright test --grep @ui"
   },
   "keywords": [],
   "author": "",

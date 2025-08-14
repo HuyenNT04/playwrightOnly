@@ -2,7 +2,7 @@ import { Locator, Page } from "@playwright/test";
 import { BasePage } from "../common/BasePage";
  
 export class LoginPage extends BasePage{
-
+ 
     private readonly emailLabel: Locator;
     private readonly passLabel: Locator;
     private readonly emailInput: Locator;
@@ -17,26 +17,31 @@ export class LoginPage extends BasePage{
     private readonly newCusDes: Locator;
     private readonly secondHeader: Locator;
     private readonly secondDes: Locator;
+    private readonly genErrorMessage: Locator;
+    private readonly subErrorMessage: Locator;
+    private readonly errorMessageForEmail: Locator;
  
     constructor(page: Page){
         super(page);
-        this.emailLabel = page.locator("");
-        this.passLabel = page.locator("");
         this.emailInput = page.locator("#Email");
         this.passwordInput = page.locator("#Password");
-        this.rememberCheckbox = page.locator("");
-        this.forgotPasswordLink = page.locator("");
+        this.rememberCheckbox = page.locator("input#RememberMe");
+        this.forgotPasswordLink = page.locator("span.forgot-password a");
         this.loginButton = page.locator("div.buttons input[type='submit']");
-        this.registerButton = page.locator("");
-        this.welcomeTitle = page.locator("");
-        this.newCusSubTitle = page.locator("");
-        this.returnCusSubTitle = page.locator("");
-        this.newCusDes = page.locator("");
-        this.secondHeader = page.locator("");
-        this.secondDes = page.locator("");
+        this.registerButton = page.locator("input[type='button'][value='Register']");
+        this.genErrorMessage = page.locator("div.validation-summary-errors span");
+        this.subErrorMessage = page.locator("div.validation-summary-errors ul li");
+        this.errorMessageForEmail = page.locator("span[data-valmsg-for='Email'] span");
     }
  
     //Method
+    async isLoginPageUICaptured(namePage: string): Promise<void>{
+        await this.captureFullPage(namePage, {
+            fullPage: true,
+            maxDiffPixels: 50,
+            maxDiffPixelRatio: 0.05
+        })
+    }
     async isMainTitleDisplayed(): Promise<boolean>{
         return this.isElementVisible(this.welcomeTitle);
     }
@@ -88,4 +93,14 @@ export class LoginPage extends BasePage{
     async getSecondDes(): Promise<string> {
         return await this.getElementInnerText(this.secondDes);
     }
+    async getGenErrorMessage(): Promise<string> {
+        return await this.getElementTextContent(this.genErrorMessage);
+    }
+    async getSubErrorMessage(): Promise<string> {
+        return await this.getElementTextContent(this.subErrorMessage);
+    }
+    async getErrorMessageForEmail(): Promise<string> {
+        return await this.getElementTextContent(this.errorMessageForEmail);
+    }
+   
 }

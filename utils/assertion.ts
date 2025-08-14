@@ -20,8 +20,8 @@ export class Assertion {
         expect.soft(actual, message ?? `Expected ${JSON.stringify(actual)} to contain ${expected}`).toContain(expected);
     }
     @step('Assert contains text')
-    static assertContainsText<T>(actual: Locator, expected: string, message?: string): void {
-        expect.soft(actual, message ?? `Expected text to contain ${expected}`).toContainText(expected);
+    static assertContainsText<T>(actual: string, expected: string, message?: string): void {
+        expect.soft(actual, message ?? `Expected text to contain ${expected}`).toContain(expected);
     }
     @step('Assert greater than')
     static assertGreaterThan(actual: number, expected: number, message?: string): void {

@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 import fs from "fs";
 import path from "path";
+import { ScreenshotOptions } from "../../model/screenshotCaptureType";
 
 //Contains all wrapper methods of Playwright
 export class BasePage {
@@ -39,10 +40,23 @@ export class BasePage {
     }
   }
   async waitForPageLoaded(): Promise<void> {
-    await this.page.waitForLoadState();
+    // Tối ưu hóa việc chờ trang tải
+    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState('networkidle');
   }
 
   //Function
+  async captureFullPage(nameOfScreen: string, options: ScreenshotOptions = {}): Promise<void>{
+    await this.waitForPageLoaded();
+    await expect(this.page).toHaveScreenshot(nameOfScreen, {
+      fullPage: true,
+      ...options,
+    })
+  }
+  async captureElement(locator: Locator, nameOfScreen: string, options: ScreenshotOptions = {}): Promise<void> {
+        await this.waitForPageLoaded();
+        await expect(locator).toHaveScreenshot(nameOfScreen, options);
+    }
   async navigateTo(url: string): Promise<void> {
     await this.page.goto(url);
   }

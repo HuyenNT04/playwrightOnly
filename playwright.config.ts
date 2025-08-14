@@ -14,6 +14,8 @@ dotenv.config({
  */
 export default defineConfig({
   testDir: './tests',
+  /*Where save based screenshot foled*/
+  snapshotDir: './tests/snapshots',
   timeout: Constant.TIMEOUT.TEST_TIMEOUT,
   /* Run tests in files in parallel */
   fullyParallel: true,
