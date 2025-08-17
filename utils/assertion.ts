@@ -1,4 +1,4 @@
-import { expect, Locator } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { step } from "./logging";
  
 export class Assertion {
@@ -31,5 +31,9 @@ export class Assertion {
     @step('Assert less than')
     static assertLessThan(actual: number, expected: number, message?: string): void {
         expect.soft(actual < expected, message ?? `Expected ${actual} to be less than ${expected}`).toBeTruthy();
+    }
+    @step('Assert to have URL')
+    static async assertToHaveUrl(actual: Page, expected: string, message?: string): Promise<void> {
+        await expect.soft(actual, message ?? 'Actual is not expected URL').toHaveURL(expected);
     }
 }

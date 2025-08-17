@@ -1,8 +1,9 @@
 import { test } from '../../fixture/tricentis-fixture';
 import { Assertion } from '../../utils/assertion';
 import { invalidAccountCredentials, validAccountCredentials } from '../../data/login-test-data';
-import { Page } from '@playwright/test';
 import { HomePage } from '../../pages/tricentis/homePage';
+import { HOMEPAGE, REGISTER_PAGE } from '../../utils/constant';
+import { headerLinksWhenNotLogin, headerTopMenu } from '../../data/header-data';
 
 test.beforeEach(async ({ loginPage }) => {
   await loginPage.navigateTo('/login');
@@ -18,12 +19,41 @@ test.describe(
     test('TC001 - Verify UI', async ({ loginPage }) => {
       await loginPage.isLoginPageUICaptured('Login-page.png');
     });
+    
+    test('TC002 - Verify behavior when clicked to Logo on Header', async ({ header }) => {
+      await header.clickToLogo();
+      Assertion.assertToHaveUrl(header.page, HOMEPAGE);
+    });
+
+    for (const headerLink of headerLinksWhenNotLogin) {
+      test(`TC002 - Verify behavior when clicked to ${headerLink.nameLink} on Header`, async ({
+        header,
+      }) => {
+        await header.clickToHeaderLink(headerLink.nameLink);
+        Assertion.assertToHaveUrl(header.page, headerLink.url);
+      });
+    }
+    test('TC002 - Verify behavior when searching', async ({ header }) => {
+      let data = 'mobile';
+      await header.inputIntoSearchbox(data);
+      await header.clickToSearchButton();
+      Assertion.assertContainsText(await header.getCurrentUrl(), data);
+    });
+
+    for (const itemInTopMenu of headerTopMenu) {
+      test(`TC002 - Verify behavior when clicked to ${itemInTopMenu.itemName} on Top Menu`, async ({
+        header,
+      }) => {
+        await header.clickToTopMenu(itemInTopMenu.itemName);
+        Assertion.assertToHaveUrl(header.page, itemInTopMenu.url);
+      });
+    }
 
     test('TC002 - Login successfully', async ({ loginPage, homePage }) => {
       await loginPage.inputEmail(validAccountCredentials.email);
       await loginPage.inputPassword(validAccountCredentials.password);
       await loginPage.clickToLoginButton();
-      Assertion.assertEqual(await homePage.getCurrentUrl(), 'https://demowebshop.tricentis.com/');
+      Assertion.assertEqual(await homePage.getCurrentUrl(), HOMEPAGE);
       Assertion.assertContainsText(await homePage.getWelcomeTitle(), 'Welcome to our store');
     });
 
@@ -58,7 +88,7 @@ test.describe(
       await loginPage.clickToRegisterButton();
       Assertion.assertEqual(
         await registerPage.getPageUrl(),
-        'https://demowebshop.tricentis.com/register'
+        REGISTER_PAGE
       );
     });
     test('TC005 - Verify remember me function', async ({ loginPage, homePage, context }) => {
@@ -73,6 +103,7 @@ test.describe(
       const newHomePage = new HomePage(newPage);
       await newHomePage.openHomePage();
       Assertion.assertEqual(await newHomePage.getAccountName(), validAccountCredentials.email);
+      console.log(await newHomePage.getAccountName() + "Huyen is checking")
       await newPage.close();
     });
     test('TC006 - Verify when clicked on Forgot Password', async ({ page }) => {});

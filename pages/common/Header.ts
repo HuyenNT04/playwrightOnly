@@ -7,6 +7,8 @@ export class Header extends BasePage{
     private headerLinksWrapper: (linkName: string) => Locator;
     private readonly searchBox: Locator;
     private readonly searchButton: Locator;
+    private readonly headerMenu: Locator;
+    private headerTopMenu: (topMenuName: string) => Locator;
    
     constructor(page: Page){
         super(page);
@@ -14,20 +16,25 @@ export class Header extends BasePage{
         this.logo = page.locator("div.header-logo");
         //Dynamic locator
         this.headerLinksWrapper = (linkName: string): Locator => {
-            if(linkName === "Wishlist"){
-                return this.page.locator(`//div[@class="header-links"]//a/span[text()="${linkName}"]`)
+            if(["Shopping cart", "Wishlist"].includes(linkName)) {
+                return this.page.locator(`//div[@class="header-links"]//a/span[text()="${linkName}"]`);
             }else{
                 return this.page.locator(`//div[@class="header-links"]//a[text()="${linkName}"]`);
             }
         }
         this.searchBox = page.locator("input#small-searchterms");
         this.searchButton = page.locator("input[type='submit'][value='Search']")
+        this.headerMenu = page.locator("div.header-menu")
+        this.headerTopMenu = (topMenuName: string): Locator => {
+            return this.page.locator(`//div[@class='header-menu']/ul[@class='top-menu']//a[contains(text(), "${topMenuName}")]`);
+        }
     }
  
     //Method
-    async getCurrentUrl(): Promise<void>{
-        await this.getUrl();
+    async getCurrentUrl(): Promise<string>{
+       return await this.getUrl();
     }
+    //for logged in cases
     async isHeaderUICaptured(nameOfScreen: string, accountEmail: string): Promise<void>{
         await this.captureElement(this.headerLoggedIn, nameOfScreen, {
             mask: [this.headerLinksWrapper(accountEmail)]
@@ -44,5 +51,8 @@ export class Header extends BasePage{
     }
     async clickToSearchButton(): Promise<void>{
         await this.clickElement(this.searchButton);
+    }
+    async clickToTopMenu(topMenuName: string): Promise<void>{
+        await this.clickElement(this.headerTopMenu(topMenuName));
     }
 }
