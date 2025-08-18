@@ -23,30 +23,30 @@ export const headerLinksWhenNotLogin: headerTypeWhenNotLogin[] = [
 export const headerTopMenu: headerTopMenuTypes[] = [
     {
         itemName: "Books",
-        url: HOMEPAGE + "Books",
+        url: HOMEPAGE + "books",
     },
     {
         itemName: "Computers",
-        url: HOMEPAGE + "Computers",
+        url: HOMEPAGE + "computers",
     },
     {
         itemName: "Electronics",
-        url: HOMEPAGE + "Electronics",
+        url: HOMEPAGE + "electronics",
     },
     {
         itemName: "Apparel & Shoes",
-        url: HOMEPAGE + "Apparel & Shoes",
+        url: HOMEPAGE + "apparel-shoes",
     },
     {
         itemName: "Digital downloads",
-        url: HOMEPAGE + "Digital downloads",
+        url: HOMEPAGE + "digital-downloads",
     },
     {
         itemName: "Jewelry",
-        url: HOMEPAGE + "Jewelry",
+        url: HOMEPAGE + "jewelry",
     },
     {
         itemName: "Gift Cards",
-        url: HOMEPAGE + "Gift Cards",
+        url: HOMEPAGE + "gift-cards",
     }
 ]

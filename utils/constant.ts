@@ -1,8 +1,8 @@
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({
-//   path: path.resolve(__dirname, '../profiles/.env.qa'),
-// });
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({
+  path: path.resolve(__dirname, '../profiles/.env.qa'),
+});
 
 export class Constant {
   static readonly TIMEOUT = {

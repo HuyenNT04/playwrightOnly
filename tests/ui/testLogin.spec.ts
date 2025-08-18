@@ -15,11 +15,12 @@ test.describe(
     tag: ['@ui', '@login'],
   },
 
-  () => {
+  () => { 
+    test.use({ role: 'guest' });
     test('TC001 - Verify UI', async ({ loginPage }) => {
       await loginPage.isLoginPageUICaptured('Login-page.png');
     });
-    
+
     test('TC002 - Verify behavior when clicked to Logo on Header', async ({ header }) => {
       await header.clickToLogo();
       Assertion.assertToHaveUrl(header.page, HOMEPAGE);
@@ -103,7 +104,6 @@ test.describe(
       const newHomePage = new HomePage(newPage);
       await newHomePage.openHomePage();
       Assertion.assertEqual(await newHomePage.getAccountName(), validAccountCredentials.email);
-      console.log(await newHomePage.getAccountName() + "Huyen is checking")
       await newPage.close();
     });
     test('TC006 - Verify when clicked on Forgot Password', async ({ page }) => {});
