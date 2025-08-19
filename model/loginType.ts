@@ -6,7 +6,3 @@ export interface loginType {
     subErrorMessage?: string;
     validatedErrorMessageForEmail?: string;
 }
-export enum userGroup{
-    HR = 'Human Resources',
-    Finance = 'Finance'
-}

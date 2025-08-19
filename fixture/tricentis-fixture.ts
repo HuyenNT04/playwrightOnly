@@ -5,6 +5,7 @@ import { RegisterPage } from "../pages/tricentis/registerPage";
 import { Header } from "../pages/common/Header";
 import fs from "fs";
 import { Role, storageStatePath } from "../auth.config";
+import { Footer } from "../pages/common/Footer";
 
 const withRole = baseTest.extend<{ role: Role }>({
   role: ['guest', { option: true }],
@@ -16,6 +17,7 @@ type MyFixtures = {
     context: BrowserContext;
     page: Page;
     header: Header;
+    footer: Footer;
     loginPage: LoginPage;
     homePage: HomePage;
     registerPage: RegisterPage;
@@ -55,6 +57,10 @@ export const test = withRole.extend<MyFixtures>({
     header: async({page}, use) => {
         const header = new Header(page);
         await use(header);
+    },
+    footer: async({page}, use) => {
+        const footer = new Footer(page);
+        await use(footer);
     },
     loginPage: async ({page}, use) => {
         const login = new LoginPage(page);

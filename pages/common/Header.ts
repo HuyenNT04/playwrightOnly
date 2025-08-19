@@ -4,6 +4,7 @@ import { BasePage } from "./BasePage";
 export class Header extends BasePage{
     private readonly headerLoggedIn: Locator;
     private readonly logo: Locator;
+    private readonly accountArea: Locator;
     private headerLinksWrapper: (linkName: string) => Locator;
     private readonly searchBox: Locator;
     private readonly searchButton: Locator;
@@ -14,6 +15,7 @@ export class Header extends BasePage{
         super(page);
         this.headerLoggedIn = page.locator("div.header");
         this.logo = page.locator("div.header-logo");
+        this.accountArea = page.locator("div.header-links a.account");
         //Dynamic locator
         this.headerLinksWrapper = (linkName: string): Locator => {
             if(["Shopping cart", "Wishlist"].includes(linkName)) {
@@ -35,9 +37,9 @@ export class Header extends BasePage{
        return await this.getUrl();
     }
     //for logged in cases
-    async isHeaderUICaptured(nameOfScreen: string, accountEmail: string): Promise<void>{
+    async isHeaderUICaptured(nameOfScreen: string): Promise<void>{
         await this.captureElement(this.headerLoggedIn, nameOfScreen, {
-            mask: [this.headerLinksWrapper(accountEmail)]
+            mask: [this.accountArea]
         })
     }
     async clickToLogo(): Promise<void>{

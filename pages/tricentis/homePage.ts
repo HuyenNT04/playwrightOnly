@@ -5,11 +5,17 @@ import { HOMEPAGE } from "../../utils/constant";
 export class HomePage extends BasePage{
     private readonly welcomeTitle: Locator;
     private readonly accountName: Locator;
+    private readonly slider: Locator;
+    private readonly producGrid: Locator;
+    private readonly recentProductBlock: Locator;
 
     constructor (page:Page){
         super(page);
         this.welcomeTitle = page.locator("h2[class*='header']");
         this.accountName = page.locator("div.header-links a[href='/customer/info']")
+        this.slider = page.locator("div#nivo-slider");
+        this.producGrid = page.locator("//div[contains(@class, 'home-page-product-grid')]");
+        this.recentProductBlock = page.locator("//div[contains(@class, 'block-recently-viewed-products')]");
     }
 
     //Methods
@@ -29,4 +35,7 @@ export class HomePage extends BasePage{
         await this.waitForPageLoaded();
         return await this.getElementTextContent(this.accountName);
     }
+    // async isHomepageCaptured(namePage: string): Promise<void>{
+    //     await this.captureElement()
+    // }
 }

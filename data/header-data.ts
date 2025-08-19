@@ -50,3 +50,4 @@ export const headerTopMenu: headerTopMenuTypes[] = [
         url: HOMEPAGE + "gift-cards",
     }
 ]
+export const headerLocator = '';
